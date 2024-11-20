@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import numpy as np
+from functions import NeighborJoiningTree as njt
 
 #Dados de input
 data = [
@@ -20,5 +21,9 @@ nOTUs = len(distanceMatrix)
 ###################################################################
 
 
-itemsTotalDistances = calculateTotalDistances(distanceMatrix, nOTUs)
+tree = njt(distanceMatrix, nOTUs) #Cria nova árvore
+
+itemsTotalDistances = tree.calculateTotalDistances()
+
+itemsSmallestValues = tree.getSmallestDistancePair(itemsTotalDistances)
 

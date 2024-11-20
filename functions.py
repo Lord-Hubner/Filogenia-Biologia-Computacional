@@ -9,14 +9,14 @@ class NeighborJoiningTree:
     _nOTUs:int
 
     def __init__(self, distanceMatrix, nOTUs) -> None:
-        _distanceMatrix = distanceMatrix
+        self._distanceMatrix = distanceMatrix
+        self._nOTUs = nOTUs
 
     def calculateTotalDistances(self) -> list:
         itemsTotalDistances = np.empty(self._nOTUs, dtype=float)
 
         for i in range(len(itemsTotalDistances)):
             currentRow = self._distanceMatrix.iloc[i, :]
-            print(currentRow)
             itemsTotalDistances[i] = sum(currentRow)/(self._nOTUs-2)
 
         return itemsTotalDistances
@@ -24,13 +24,21 @@ class NeighborJoiningTree:
     def getSmallestDistancePair(self, itemsTotalDistances: int):
         #(math.factorial(self._nOTUs)/math.factorial(self._nOTUs-2)*math.factorial(2)) #Combinação de nOTUs elementos dois a dois
         distanceMatrix:pd.DataFrame = self._distanceMatrix
+        itemsSmallestValues = np.empty([self._nOTUs,self._nOTUs], dtype=int)
 
         for i in range(self._nOTUs):
             if(i == 0): continue;
 
-            currentFrame = distanceMatrix.loc[i, 0:i];
+            currentFrame = distanceMatrix.iloc[i, 0:i];
+            print(currentFrame)
             
-            for j in range(currentFrame.columns):
+            for j in range(currentFrame.count()):
+                currentValue = (distanceMatrix[i,j] - itemsTotalDistances[i] - itemsTotalDistances[j])
+                itemsSmallestValues[i,j] = currentValue
+
+        
+        return min(itemsSmallestValues)
+
 
             
 
