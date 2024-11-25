@@ -23,7 +23,8 @@ nOTUs = len(distanceMatrix)
 
 tree = njt(distanceMatrix, nOTUs) #Cria nova árvore
 
-itemsTotalDistances = tree.calculateTotalDistances()
+treeString = tree.buildPhylogeneticTree()
 
-itemsSmallestValues = tree.getSmallestDistancePair(itemsTotalDistances)
+print(f"""Árvore resultante: 
+      {treeString}""")
 
